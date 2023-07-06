@@ -12,10 +12,10 @@ router.get('/countries', getCountries);
 router.get('/countries/name', getCountriesByName);
 router.get('/countries/:countryId', getCountryById);
 
+router.post('/activities', postActivity);
+router.get('/activities', getActivities);
 
-//router.get('/activities', getActivities);
-//router.post('/activities', postActivity);
 
-//router.delete('/activities/:id', deleteActivity);
+
 
 module.exports = router;
