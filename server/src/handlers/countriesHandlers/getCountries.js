@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Country} = require('../../db');
+const {Countries} = require('../../db');
 
 const URL = 'http://localhost:5000/countries';
 
@@ -8,7 +8,7 @@ const getCountries = async (req, res) =>{
         const {data} = await axios(URL);
         if(data){   
             data.map(async pais =>{
-               await Country.findOrCreate({
+               await Countries.findOrCreate({
                 where: { id:pais.cca3, },
                 defaults: {
                     name:pais.name.common,
@@ -22,7 +22,7 @@ const getCountries = async (req, res) =>{
                 });
             });
            
-            let paises = await Country.findAll();
+            let paises = await Countries.findAll();
            return res.status(200).json(paises);
         }
     } catch (error) {

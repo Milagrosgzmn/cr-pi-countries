@@ -1,18 +1,18 @@
-const {Country} = require('../../db');
+const {Countries} = require('../../db');
 const { Op } = require("sequelize");
 
 const getCountriesByName = async (req, res)=>{
     const {name} = req.query;
     
     try {
-        const countries = await Country.findAll({
+        const countries = await Countries.findAll({
             where: {
                 name:{
                     [Op.substring]: name,
                 },
             }
         });
-        if (countries) {
+        if (countries.length>0) {
             return res.status(200).json(countries);
         }
         return res.status(400).send('No se encontraron paises con ese nombre');
