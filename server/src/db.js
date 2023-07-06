@@ -31,10 +31,10 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Country, TouristActivities } = sequelize.models;
+const { Countries, TouristActivities } = sequelize.models;
 // Aca vendrian las relaciones
-Country.belongsToMany(TouristActivities,{ through: 'CountryxActivities' });
-TouristActivities.belongsToMany(Country,{ through: 'CountryxActivities' });
+Countries.belongsToMany(TouristActivities,{ through: 'CountryxActivities' });
+TouristActivities.belongsToMany(Countries,{ through: 'CountryxActivities' });
 
 
 module.exports = {
