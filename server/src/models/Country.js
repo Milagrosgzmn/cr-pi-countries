@@ -12,21 +12,26 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      set (value){
+        this.setDataValue('name', value.toLowerCase());
+      },
     },
     flags:{
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY (DataTypes.STRING),
       allowNull: false,
     },
     continents:{
-      type: DataTypes.STRING,
+      type:  DataTypes.JSON,
       allowNull: false,
     },
     capital:{
-      type: DataTypes.STRING,
+      type:  DataTypes.JSON,
+      defaultValue: 'No posee capital',
       allowNull: false,
     },
     subregion:{
       type: DataTypes.STRING,
+      defaultValue: 'No posee subregion',
     },
     area:{
       type: DataTypes.INTEGER,
