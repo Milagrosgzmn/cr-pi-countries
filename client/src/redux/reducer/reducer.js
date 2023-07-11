@@ -10,7 +10,7 @@ const initialState = {
     respaldoA:[],
 }
 
-export const rootReducer = (state = initialState, {type, payload})=>{
+ const rootReducer = (state = initialState, {type, payload})=>{
 
     switch (type) {
         case GET_COUNTRIES:
@@ -92,3 +92,4 @@ export const rootReducer = (state = initialState, {type, payload})=>{
     }
 
 };
+export default rootReducer;
