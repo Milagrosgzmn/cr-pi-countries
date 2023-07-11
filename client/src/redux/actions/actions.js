@@ -1,4 +1,6 @@
-export const GET_COUNTRIES='GET_COUNTRIES';export const ADD_ACT = 'ADD_ACT';
+export const GET_COUNTRIES='GET_COUNTRIES';
+export const SET_DISPLAYED = 'SET_DISPLAYED';
+export const ADD_ACT = 'ADD_ACT';
 export const RESET= 'RESET';
 export const FILTER_CONT ='FILTER_CONT';
 export const FILTER_ACT ='FILTER_ACT';
@@ -25,6 +27,13 @@ export const getCountries = ()=>{
         }
     }
 };
+
+export const setDisplayed = (page)=>{
+    return {
+        type: SET_DISPLAYED,
+        payload: page,
+    }
+}
 
 export const addActivity = (activity)=>{
     const endpoint = 'http://localhost:3001/activities';
