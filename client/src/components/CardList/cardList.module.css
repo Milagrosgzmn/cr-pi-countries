@@ -1,0 +1,13 @@
+.cardsList{
+    margin: 2em 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5em;
+    width: 100%;
+}
+
+@media screen and (max-width:700px) {
+    .cardsList{
+        grid-template-columns: 1fr;
+    }
+ }

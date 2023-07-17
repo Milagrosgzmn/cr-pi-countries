@@ -1,0 +1,115 @@
+.formCont{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.formCont > h1{
+    font-size: 2.5em;
+    width: 80%;
+    margin: 1em;
+    text-align: center;
+    
+}
+.formCont form{
+    width: 80%;
+    padding: 1em 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.formCont form > input{
+    padding: 0.5em;
+    margin: 0.125em auto;
+    width: 50vw;
+    border: 1px solid rgba(136, 136, 136, 0.61);
+    border-radius: 20px;
+}
+.formCont form > label{
+    margin: 1.125em auto 0.25em 12em;
+    width: max-content;
+    font-weight: bold;
+}
+.checkCont{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+    height: 30vh;
+
+    padding: 1em 0 1em 0;
+    margin: 0.5em auto 2em auto;
+
+    border-radius: 20px;
+    border: 0.5px solid rgba(209, 209, 209, 0.456);
+    overflow-y: scroll;
+}
+.checkCont::-webkit-scrollbar{
+    width: 0.5em;
+    border-radius: 5px;
+    background-color: rgba(201, 201, 201, 0.458);
+}
+.checkCont::-webkit-scrollbar-thumb{
+    background-color: #0074D9;
+    border-radius: 5px;
+}
+
+.checkCont input[type='checkbox']{
+    display: none;
+}
+.checkCont label{
+    color: #0074D9;
+    padding: 0.25em 0.75em 0.25em 3em;
+    display: inline-block;
+    position: relative;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+
+    transition: all 0.3 ease;
+}
+.checkCont label:hover{
+    background-color: #7abcf693;
+}
+.checkCont label:before{
+    content: '';
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background: none;
+    border: 2px solid #0074D9;
+    border-radius: 0.5em;
+    position: absolute;
+    left: 1em;
+    top: 0.4em;
+}
+.checkCont input[type='checkbox']:checked + label {
+    padding: 0.25em 0.5em;
+    background-color: #0074D9;
+    color: white;
+}
+.checkCont input[type='checkbox']:checked + label::before {
+    display: none;
+}
+.checkInput{
+    width: max-content;
+    padding: 0.125em 0.5em;
+}
+
+.error{
+    color: rgb(225, 0, 0);
+    margin:0 auto 0.25em 12em;
+}
+.btnAgregar{
+    width: 20%;
+    margin: 2em auto;
+    color:white;
+    background-color: #ffb300;
+    border: 1px solid #ffb300;
+    border-radius: 20px;
+}
+.btnAgregar:hover{
+        background-color:white;
+        border: 1px solid #ffb300;
+        color: #ff8c00;
+}

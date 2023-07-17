@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.nav{
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    height: 5em;
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    background-color: #000065;
+    font-size: large;
+}
+.icono{
+    width: 4em;
+    height: 4em;
+    margin: 0.5em 2em;
+}
+.icono img{
+    width: 100%;
+}
+.links{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+}
+.links a{
+    text-decoration: none;
+    color: white;
+}
+.links a:hover{
+    color: #ff9c12;
+}
+@media screen and (max-width:800px){
+    .links{
+        width: 40%;
+    }
+}

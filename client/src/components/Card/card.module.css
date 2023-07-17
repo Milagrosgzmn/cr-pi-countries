@@ -1,0 +1,93 @@
+
+.cardContainer{
+    border-radius: 20px;
+    width: 95%;
+    margin: 0 2.5%;
+    height:300px;
+    border: 1px solid rgba(99, 99, 99, 0.377);
+}
+.cardContainer a{
+    display: contents;
+}
+.imgC{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.imgC img{
+    border-radius: 20px;
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}
+.datosC{
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 61, 0.793);
+
+    opacity: 0;
+    transition: 0.5s;
+
+    position: relative;
+    bottom: 100%;
+}
+.datosC h2{
+    font-size: 2.5em;
+    color: rgb(255, 227, 142);
+}
+.cardContainer:hover .datosC{
+    opacity: 1;
+}
+.cardContainer:hover{
+    transform: scale(1.05);
+    box-shadow: 0em 0.5em 2em rgba(0, 0, 0, 0.426);
+}
+
+
+@media screen and (max-width:1100px) {
+
+    
+.cardContainer{
+    height:200px;
+}
+
+    .imgC img{
+        height: 200px;
+    }
+ }
+
+ @media screen and (max-width:780px) {
+
+    .cardContainer{
+        height:150px;
+    }
+        .imgC img{ 
+            height: 150px;
+        }
+     }
+     @media screen and (max-width:700px) {
+
+        .cardContainer{
+            height:280px;
+        }
+            .imgC img{ 
+                height: 280px;
+            }
+         }
+         @media screen and (max-width:500px) {
+
+            .cardContainer{
+                height:200px;
+            }
+                .imgC img{ 
+                    height: 200px;
+                }
+             }
