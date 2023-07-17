@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       },
     },
     flags:{
-      type: DataTypes.ARRAY (DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     continents:{
