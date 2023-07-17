@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Countries} = require('../../db');
+const {Countries, TouristActivities} = require('../../db');
 
 const URL = 'http://localhost:5000/countries';
 
@@ -8,21 +8,37 @@ const getCountries = async (req, res) =>{
         const {data} = await axios(URL);
         if(data){   
             data.map(async pais =>{
+                let flag;
+                if(pais.flags.svg){
+                    flag=pais.flags.svg;
+                    
+                }else{
+                    flag=pais.flags.png;
+                }
                await Countries.findOrCreate({
                 where: { id:pais.cca3, },
                 defaults: {
                     name:pais.name.common,
-                    flags: [pais.flags.png, pais.flags.svg],
+                    flags: flag,
                     continents:pais.continents,
                     capital:pais.capital,
                     subregion:pais.subregion,
                     area:pais.area,
                     population: pais.population,
-                }
+                },
+                
                 });
             });
            
-            let paises = await Countries.findAll();
+            let paises = await Countries.findAll({
+                include: [{
+                    model: TouristActivities,
+                    attributes: ["nombre"],
+                    through: {
+                        attributes: [],
+                    }
+                  }],
+            });
            return res.status(200).json(paises);
         }
     } catch (error) {

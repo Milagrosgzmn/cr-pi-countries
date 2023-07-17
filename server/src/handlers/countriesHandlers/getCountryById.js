@@ -1,11 +1,18 @@
-const {Countries} = require('../../db');
+const {Countries, TouristActivities} = require('../../db');
 
 const getCountryById = async (req, res)=>{
     const {countryId} = req.params;
 
     try {
-        const country = await Countries.findOne({where:{id:countryId}});
-        // me falta el  include model: touristActivities as con activities;
+        const country = await Countries.findOne({where:{id:countryId},
+            include: [{
+                model: TouristActivities,
+                attributes: ["nombre"],
+                through: {
+                    attributes: [],
+                }
+              }],
+            });
         if (country) {
             return res.status(200).json(country);
         }

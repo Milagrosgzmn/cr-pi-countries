@@ -1,4 +1,4 @@
-const {Countries} = require('../../db');
+const {Countries, TouristActivities} = require('../../db');
 const { Op } = require("sequelize");
 
 const getCountriesByName = async (req, res)=>{
