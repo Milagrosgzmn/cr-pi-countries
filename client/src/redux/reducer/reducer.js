@@ -1,4 +1,4 @@
-import { GET_COUNTRIES, SET_DISPLAYED, ADD_ACT, ORDER_ABC, ORDER_NUM, FILTER_ACT,FILTER_CONT, RESET} from "../actions/actions";
+import { GET_COUNTRIES, SET_DISPLAYED,GET_ACTIVITIES, ADD_ACT, SEARCH, ORDER_ABC, ORDER_NUM, FILTER_ACT,FILTER_CONT, RESET} from "../actions/actions";
 
 const initialState = {
     countries: [],
@@ -7,7 +7,6 @@ const initialState = {
     page:1,
     perPage:10,
     activities:[],
-    respaldoA:[],
 }
 
  const rootReducer = (state = initialState, {type, payload})=>{
@@ -25,46 +24,72 @@ const initialState = {
             let to= payload * state.perPage;
             return {
                 ...state,
-                displayedCountries:state.countries.slice(from, to),
+                displayedCountries: state.countries.slice(from, to),
                 page: payload,
+            };
+        case GET_ACTIVITIES:
+            
+            return {
+                ...state, 
+                activities: payload,
             };
         case ADD_ACT:
             
             return {
                 ...state, 
-                activities:payload,
-                respaldoA:payload,
+                activities:[...state.activities, payload],
+            };
+        case SEARCH:
+            return {
+                ...state, 
+                countries: payload,
             };
         case ORDER_ABC:
             let copia;
             if (payload==='A') {
-                copia = state.respaldoC.sort((a,b)=> a.name < b.name ? -1 : 1);
+                copia = state.countries.slice().sort((a,b)=> a.name < b.name ? -1 : 1);
             }
             if (payload==='D') {
-                copia = state.respaldoC.sort((a,b)=> a.name > b.name ? -1 : 1);
+                copia = state.countries.slice().sort((a,b)=> a.name > b.name ? -1 : 1);
             }
             return {
                 ...state, 
-                countries: copia,
+                countries: [...copia],
             };
         case ORDER_NUM:
             let miCopia;
-            if (payload==='A') {
-                miCopia = state.respaldoC.sort((a,b)=> a.population < b.population ? -1 : 1);
+            if (payload==="1") {
+                miCopia = state.countries.slice().sort((a,b)=> a.population < b.population ? -1 : 1);
             }
-            if (payload==='D') {
-                miCopia = state.respaldoC.sort((a,b)=> a.population > b.population ? -1 : 1);
+            if (payload==="2") {
+                miCopia = state.countries.slice().sort((a,b)=> a.population > b.population ? -1 : 1);
             }
-            return {
-                ...state, 
-                countries: miCopia,
-            };
-        case FILTER_ACT:
             
             return {
-                ...state,
-                activities: state.respaldoA.filter(activity => activity.nombre === payload), 
+                ...state, 
+                countries: [...miCopia],
+            };
+        case FILTER_ACT:
+          
+            let filteredA = state.respaldoC.filter( country =>{
+                let actividades = country.TouristActivities;
+               
+                if (actividades.length !== 0) {
 
+                    for (let i = 0; i < actividades.length; i++) {
+
+                        if (actividades[i].nombre === payload) {
+                            return true;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            });
+
+            return {
+                ...state,
+                countries: filteredA, 
             };
         case FILTER_CONT:
             
@@ -73,7 +98,6 @@ const initialState = {
                 countries: state.respaldoC.filter(country => country.continents[0]=== payload),
             };
         case RESET:
-            
             return {
                 ...state, 
                 countries: state.respaldoC,
