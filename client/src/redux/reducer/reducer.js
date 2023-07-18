@@ -1,4 +1,4 @@
-import { GET_COUNTRIES, SET_DISPLAYED,GET_ACTIVITIES, ADD_ACT, SEARCH, ORDER_ABC, ORDER_NUM, FILTER_ACT,FILTER_CONT, RESET} from "../actions/actions";
+import { GET_COUNTRIES, SET_DISPLAYED,GET_ACTIVITIES, ADD_ACT,DELETE_ACT, SEARCH, ORDER_ABC, ORDER_NUM, FILTER_ACT,FILTER_CONT, RESET} from "../actions/actions";
 
 const initialState = {
     countries: [],
@@ -13,32 +13,41 @@ const initialState = {
 
     switch (type) {
         case GET_COUNTRIES:
-            
             return {
                 ...state, 
                 countries: payload,
                 respaldoC: payload,
             };
+
         case SET_DISPLAYED:
             let from = (payload * state.perPage)-state.perPage;
             let to= payload * state.perPage;
+
             return {
                 ...state,
                 displayedCountries: state.countries.slice(from, to),
                 page: payload,
             };
+
         case GET_ACTIVITIES:
             
             return {
                 ...state, 
                 activities: payload,
             };
+
         case ADD_ACT:
-            
             return {
                 ...state, 
                 activities:[...state.activities, payload],
             };
+
+        case DELETE_ACT:
+            return {
+                ...state,
+             activities: payload,
+            };
+
         case SEARCH:
             return {
                 ...state, 
@@ -71,7 +80,7 @@ const initialState = {
             };
         case FILTER_ACT:
           
-            let filteredA = state.respaldoC.filter( country =>{
+            let filteredA = state.countries.filter( country =>{
                 let actividades = country.TouristActivities;
                
                 if (actividades.length !== 0) {
@@ -102,13 +111,6 @@ const initialState = {
                 ...state, 
                 countries: state.respaldoC,
             };
-        /* case DELETE_ACT:
-            
-            return {
-                ...state,
-             myFavorites: payload,
-            }; */
-    
         default:
             return {
                ...state, 

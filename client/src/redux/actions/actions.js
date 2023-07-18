@@ -5,17 +5,16 @@ export const SET_DISPLAYED = 'SET_DISPLAYED';
 
 export const GET_ACTIVITIES ='GET_ACTIVITIES';
 export const ADD_ACT = 'ADD_ACT';
+export const DELETE_ACT = 'DELETE_ACT';
 
 export const SEARCH = 'SEARCH';
 export const RESET= 'RESET';
+
 export const FILTER_CONT ='FILTER_CONT';
 export const FILTER_ACT ='FILTER_ACT';
 export const ORDER_ABC ='ORDER_ABC';
 export const ORDER_NUM ='ORDER_NUM';
 
-
-
-//export const DELETE_ACT = 'DELETE_ACT';
 export const getCountries = ()=>{
     const endpoint = 'http://localhost:3001/countries';
 
@@ -74,6 +73,22 @@ export const addActivity = (activity)=>{
         }
     }
 };
+export const deleteAct = (id)=>{
+    const endpoint = `http://localhost:3001/activities/${id}`;
+
+    return async (dispatch)=>{
+        try {
+            const {data} = await axios.delete(endpoint)
+            return (dispatch) ({
+                type: DELETE_ACT,
+                payload: data,
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    
+};
 
 export const search = (busqueda)=>{
     let search = busqueda.trim();
@@ -88,7 +103,7 @@ export const search = (busqueda)=>{
             })
 
         } catch (error) {
-            console.log(error.message);
+            alert('No hay país que coincida con la busqueda, intenta con un valor distinto.');
         }
     }
 };
@@ -122,8 +137,4 @@ export const filterByActivity = (activity)=>{
         payload: activity,
     };
 };
-
-/* export const deleteAct = (activity)=>{
-
-}; */
 
