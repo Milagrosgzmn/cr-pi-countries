@@ -12,6 +12,9 @@ module.exports = (sequelize) => {
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      set (value){
+        this.setDataValue('nombre', value.toLowerCase());
+      },
     },
     dificultad:{
         type:DataTypes.INTEGER,
