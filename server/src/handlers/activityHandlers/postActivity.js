@@ -21,7 +21,7 @@ const postActivity = async (req, res)=>{
                  await newActivity.addCountries(newCountry.id);
             });
 
-            return res.status(200).send('Se creó la actividad con exito');
+            return res.status(200).send(newActivity);
 
         }
         return res.status(400).send('Faltan datos');
