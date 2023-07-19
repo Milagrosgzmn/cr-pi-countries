@@ -1,3 +1,97 @@
 .detailCont{
-    padding-top: 5em;
+    padding-top: 5.25em;
+}
+.detail{
+    width: 80%;
+    margin: 1em auto;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 20px;
+    border: 1px solid #e2e2e257;
+    box-shadow: 0 0 2em #a6a6a66b;
+}
+.detail span{
+    width: 90%;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 1em;
+}
+.detail span h1{
+    width: max-content;
+    margin-right: 0.5em;
+}
+.detail span p {
+    font-size: 2.25em;
+}
+.datosCont{
+    width: 45%;
+}
+.datos{
+    margin: 1em 0;
+    display: flex;
+   flex-wrap: wrap;
+    align-items: center;
+}
+.datos p{
+    margin: 0 1em;
+    text-align: center;
+    padding: 0 1em;
+    font-weight: 400;
+    font-size: 1.25em;
+}
+.datos h3{
+    font-size: 1.5em;
+    width: 35%;
+}
+.imgCont{
+    width: 50%;
+    border: 1px solid rgba(167, 167, 167, 0.808);
+}
+.imgCont img{
+    width: 100%;
+}
+.act{
+    width: 80%;
+    margin: 2em auto;
+}
+
+@media screen and (max-width:1120px) {
+    .detail{
+        width: 90%;
+        padding: 1em;
+    }
+}
+@media screen and (max-width:1000px) {
+    .detail{
+        flex-direction: column;
+    }
+    .datosCont{
+        width: 90%;
+    }
+    .imgCont{
+        width: 90%;
+    }
+}
+@media screen and (max-width:500px) {
+    .detail h1{
+        font-size: 2em;
+    }
+    .detail span p{
+        font-size: 0.5em;
+    }
+    .detail h3{
+        font-size: 1em;
+    }
+    .detail p{
+        font-size: 16px;
+    }
+    .datos p{
+        padding: 0 0.25em;
+    }
+    .datos{
+        justify-content: space-between;
+    }
 }

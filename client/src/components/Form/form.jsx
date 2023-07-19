@@ -1,16 +1,18 @@
 import {useSelector, useDispatch} from 'react-redux';
-import { useState } from 'react';
-import { addActivity } from '../../redux/actions/actions';
+import { useState, useRef } from 'react';
+import { addActivity, getActivities } from '../../redux/actions/actions';
 import validation from './validation';
 
 import style from './form.module.css';
 
 export default function Form (){
+
      const {respaldoC} = useSelector((state)=>{
         return state;
     });
     const dispatch = useDispatch();
 
+    const checkboxesRef = useRef([]);
     const [activity, setActivity] = useState({
         nombre:'',
         dificultad:'',
@@ -21,10 +23,11 @@ export default function Form (){
     const [errors, setErrors] = useState({});
 
     function handleChange(event){
-
+        
         if (event.target.name === 'CountryId' ) {
             if (activity.CountryId.includes(event.target.value)) {
                 let filtrado = activity.CountryId.filter( country => country !== event.target.value);
+                
                 setActivity({
                     ...activity,
                     [event.target.name]: [...filtrado],
@@ -33,11 +36,11 @@ export default function Form (){
                     validation({
                     ...activity,
                     CountryId:[...filtrado],
-                }))
+                }));
             }else{
                 setActivity({
                 ...activity,
-                [event.target.name]: [...activity.CountryId,`${event.target.value}`]
+                [event.target.name]: [...activity.CountryId,`${event.target.value}`],
             });
             setErrors(
                 validation({
@@ -46,7 +49,8 @@ export default function Form (){
             }));
             }
             
-        } else {
+        } 
+        if(event.target.name !== 'CountryId'){
             setActivity({
             ...activity,
             [event.target.name]: `${event.target.value}`
@@ -58,12 +62,18 @@ export default function Form (){
         }));
         }
         
-        
     }
+
+
     function submitHandler (e){
         e.preventDefault();
-        if(!errors.nombre && !errors.dificultad && !errors.temporada && !errors.CountryId){
-            dispatch(addActivity(activity));
+        if(!errors.nombre && !errors.duracion && !errors.dificultad && !errors.temporada && !errors.CountryId){
+            
+            dispatch(addActivity(activity))
+            .then(()=>{
+                dispatch(getActivities());
+            }).catch((error)=>{console.log(error.message)});
+            
             setActivity({
                 nombre:'',
                 dificultad:'',
@@ -71,15 +81,19 @@ export default function Form (){
                 temporada:'',
                 CountryId:[],
             });
+
+            checkboxesRef.current.forEach((checkbox) => {
+                checkbox.checked = false;
+              });
         }
-       
     }
 
     return(
     <div className={style.formCont}>
         <h1>Completa el siguiente formulario para crear una nueva actividad turística</h1>
+        <p>Los campos obligatorios estan señalados con un asterisco (*). </p>
         <form onSubmit={submitHandler}>
-            <label >Nombre: </label>
+            <label >* Nombre: </label>
             <input 
             placeholder="Ingrese la actividad" 
             onChange={handleChange}  
@@ -88,7 +102,7 @@ export default function Form (){
             type='text'/>
             {errors.nombre && <span className={style.error} >{errors.nombre} *</span>}
 
-            <label >Dificultad: </label>
+            <label >* Dificultad: </label>
             <input 
             placeholder="Value la difultad del 1 al 5" 
             onChange={handleChange}  
@@ -97,7 +111,7 @@ export default function Form (){
             type='text'/>
            {errors.dificultad && <span className={style.error} >{errors.dificultad} *</span>}
 
-            <label >Duración: </label>
+            <label >  Duración: </label>
             <input 
             placeholder="Ingrese la duracion en horas" 
             onChange={handleChange}  
@@ -106,7 +120,7 @@ export default function Form (){
             type='number'/>
             {errors.duracion &&<span className={style.error} >{errors.duracion} *</span>}
 
-            <label >Temporada: </label>
+            <label >* Temporada: </label>
             <input 
             placeholder="Ingrese la temporada" 
             onChange={handleChange}  
@@ -115,21 +129,23 @@ export default function Form (){
             type=''/>
             {errors.temporada && <span className={style.error} >{errors.temporada} *</span>}
 
-            <label >Paises: </label>
+            <label >* Paises: </label>
             <div className={style.checkCont}>
-                { respaldoC.slice().sort((a,b)=> a.name < b.name ? -1 : 1).map(country =>(
+                { respaldoC.slice().sort((a,b)=> a.name < b.name ? -1 : 1).map((country, i) =>(
                     <div className={style.checkInput} key={country.id}>
                     <input type="checkbox"
                         id = {`pais-${country.id}`}
                         name='CountryId'
                         value={`${country.id}`}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        ref={(ref) => (checkboxesRef.current[i] = ref)} />
                     <label htmlFor={`pais-${country.id}`} >{country.name.slice(0,1).toUpperCase()+country.name.slice(1)}</label>
                     </div>
                 ))}
             </div>
             {errors.CountryId && <span className={style.error} >{errors.CountryId} *</span>}
-            <button className={style.btnAgregar} onClick={submitHandler} type="submit">AGREGAR</button>
+            { errors.vacio && <button className={style.btnAgregar} onClick={submitHandler} type="submit">AGREGAR</button>}
+            {!errors.vacio && <h3 > Para crear la actividad, complete los campos obligatorios </h3>}
         </form>
 
     </div>

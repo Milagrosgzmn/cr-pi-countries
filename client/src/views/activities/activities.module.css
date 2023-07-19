@@ -1,3 +1,45 @@
 .activitiesCont{
     padding-top: 5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+.activitiesCont h1{
+    margin-top: 1em;
+    width: 80%;
+}
+
+.actList{
+    width: 80%;
+    margin: 1em auto;
+}
+.activity{
+    position: relative;
+    padding: 1em;
+    border: 1px solid rgba(202, 202, 202, 0.488);
+    border-radius: 20px;
+    margin: 1.5em 0;
+}
+
+.datos{
+    margin: 1em 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.datos h3{
+    margin-right: 1em;
+}
+.btnDelete{
+    padding: 0.5em 1em;
+    position: absolute;
+    right: 1em;
+    background-color: rgba(227, 227, 227, 0.753);
+    border: 1px solid #213547;
+}
+.btnDelete:hover{
+    background-color:rgb(223, 15, 15);
+    border: none;
+    color: white;
 }

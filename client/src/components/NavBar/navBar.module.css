@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: row;
     justify-items: flex-start;
-    background-color: #000065;
+    background-color: #000017;
     font-size: large;
 }
 .icono{
@@ -23,19 +23,19 @@
 }
 .links{
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    width: 30%;
+    width: 60%;
 }
 .links a{
     text-decoration: none;
     color: white;
+   margin-right: 1.5em;
 }
 .links a:hover{
     color: #ff9c12;
 }
 @media screen and (max-width:800px){
     .links{
-        width: 40%;
+        width: 80%;
     }
 }

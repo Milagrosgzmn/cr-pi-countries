@@ -69,25 +69,24 @@
     .cardContainer{
         height:150px;
     }
-        .imgC img{ 
-            height: 150px;
-        }
-     }
-     @media screen and (max-width:700px) {
+    .imgC img{ 
+        height: 150px;
+    }
+}
+@media screen and (max-width:700px) {
 
-        .cardContainer{
-            height:280px;
-        }
-            .imgC img{ 
-                height: 280px;
-            }
-         }
-         @media screen and (max-width:500px) {
-
-            .cardContainer{
-                height:200px;
-            }
-                .imgC img{ 
-                    height: 200px;
-                }
-             }
+    .cardContainer{
+        height:280px;
+    }
+    .imgC img{ 
+        height: 280px;
+    }
+}
+@media screen and (max-width:500px) {
+    .cardContainer{
+        height:200px;
+    }
+    .imgC img{ 
+        height: 200px;
+    }
+}

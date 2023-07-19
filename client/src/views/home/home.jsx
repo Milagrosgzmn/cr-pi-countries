@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
-import { setDisplayed } from '../../redux/actions/actions';
+import { setDisplayed, getActivities } from '../../redux/actions/actions';
 import CardList from '../../components/CardList/cardList';
 import SearchFilterBar from '../../components/SearchFilterBar/searchFilterBar';
 
@@ -19,6 +19,8 @@ export default function Home (){
     }
 
     useEffect(()=>{
+        
+        dispatch(getActivities());
         dispatch(setDisplayed(page));
     },[countries]);
 

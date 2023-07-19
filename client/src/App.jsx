@@ -13,13 +13,15 @@ import './App.css'
 import FormPage from './views/forPage/formPage';
 
 function App() {
-   const rutas = ['/home', '/activities', '/activities/new'];
+
    const dispatch =  useDispatch();
+
+   const rutas = ['/home', '/activities', '/activities/new'];
+   
    let location = useLocation();
 
    useEffect(()=>{
       dispatch(getCountries());
-      dispatch(getActivities());
   },[]);
 
   return (

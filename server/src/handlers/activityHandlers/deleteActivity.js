@@ -11,7 +11,7 @@ const deleteActivity = async(req, res)=>{
                 }
             });
             const activities = await TouristActivities.findAll();
-            return res.status(200).send(activities);
+            return res.status(200).send('Actividad eliminada con exito');
         }
         return res.status(400).send('Faltan datos');
     } catch (error) {

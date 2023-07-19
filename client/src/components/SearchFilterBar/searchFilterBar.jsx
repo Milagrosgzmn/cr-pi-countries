@@ -1,77 +1,59 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {search, resetCountries, orderAbc, orderNum, filterByActivity, filterByContinent} from '../../redux/actions/actions';
+import {search,doesFilter , resetCountries, orderAbc, orderNum, filterByActivity, filterByContinent} from '../../redux/actions/actions';
+import { useOnKeyPress } from '../../hooks/useOnKeyPress';
 
 import style from './searchFilterBar.module.css';
 
 export default function SearchFilterBar (){
     const dispatch = useDispatch();
 
-    const {activities} = useSelector( state =>{
+    const {activities, countries, respaldoC, filters} = useSelector( state =>{
         return state;
     });
+
+    const [resultados, setResultado] = useState('');
+    const [didSearch, setDidSearch] = useState(false);
     const [searchValue, setSearch] = useState('');
-    const [orderFilter, setOrderFilter] = useState({
-        orderAbcValue: '',
-        orderPopuValue:'',
-        continentValue:'',
-        activitiesValue: '',
-        });
 
     function handleChange(e){
         setSearch(`${e.target.value}`);
      }
 
-   function searchHandler (event){
-      event.preventDefault();
-      dispatch(search(searchValue));
-
-   }
-
-   function handleReset (event){
-    event.preventDefault();
+   function searchHandler (){
     
-    setOrderFilter({
-        orderAbcValue: '',
-        orderPopuValue:'',
-        continentValue:'',
-        activitiesValue: '',
-    });
-    setSearch('');
-    dispatch(resetCountries());
+      dispatch(search(searchValue));
+      setDidSearch(true);
+      setResultado(searchValue);
+      setSearch('');
    }
+
+   useOnKeyPress(searchHandler, 'Enter');
 
    function handleOrderABC (event){ 
-    setOrderFilter((prevOrderFilter) => ({
-        ...prevOrderFilter,
-        orderAbcValue: event.target.value,
-    }));   
-    dispatch(orderAbc(event.target.value));
-           
-            
+    dispatch(orderAbc(event.target.value));            
    }
+
    function handleOrderPopu (event){
     dispatch(orderNum(event.target.value));
-    setOrderFilter({
-        ...orderFilter,
-        orderPopuValue: event.target.value,
-    });
-}
+    }
 
    function handleFilterC (event){
         dispatch(filterByContinent(event.target.value));
-        setOrderFilter({
-            ...orderFilter,
-            continentValue: event.target.value,
-        });
+        dispatch(doesFilter());
     }
+
     function handleFilterA (event){
-        setOrderFilter({
-            ...orderFilter,
-            activitiesValue: event.target.value,
-        });
         dispatch(filterByActivity(event.target.value));
+        dispatch(doesFilter());
     }
+
+   function handleReset (event){
+        event.preventDefault();
+        dispatch(resetCountries());
+        setResultado('')
+        setDidSearch(false);     
+   }
 
      return (
     <div className={style.container}>
@@ -80,48 +62,44 @@ export default function SearchFilterBar (){
             <button onClick={searchHandler}>BUSCAR</button>
       </div>
        <div className={style.filtros}>
-            <div className={style.filtroHijo}>
-                <h3>Ordenar:</h3>
-                <div>
-                    <select value={orderFilter.orderAbcValue} onChange={handleOrderABC} name="alfabetico" id="ordenABC">
-                        <option value="" hidden="hidden"> Alfabeticamente </option>
-                        <option value="A">Ascendente</option>
-                        <option value="D">Descendente</option>
-                    </select>
-                </div>
-                <div>
-                    <select value={orderFilter.orderPopuValue} onChange={handleOrderPopu} name="poblacion" id="ordenPopulation">
-                        <option value="" hidden="hidden">Por Población</option>
-                        <option value="1">Ascendente</option>
-                        <option value="2">Descendente</option>
-                    </select>
-                </div>
-            </div>
-            <div /* className={style.filtroHijo} */>
+             <div className={style.filtroHijo}>
                 <h3>Filtrar por:</h3>
-                <div>
-                    <select value={orderFilter.continentValue} onChange={handleFilterC}  name="continent" id="continent">
+                    <select value={filters.continent} onChange={handleFilterC}  name="continent" id="continent">
                         <option value="" hidden="hidden">Continente</option>
                         <option value="Europe">Europe</option>
                         <option value="Africa">Africa</option>
                         <option value="Asia">Asia</option>
-                        <option value="America">America</option>
+                        <option value="North America">América del Norte</option>
+                        <option value="South America">América del Sur</option>
                         <option value="Oceania">Oceania</option>
                         <option value="Antarctica">Antarctica</option>
                     </select>
-                </div>
-                <div>
-                    <select value={orderFilter.activitiesValue} onChange={handleFilterA} name="actividades" id="activities">
+
+                    <select value={filters.activity} onChange={handleFilterA} name="actividades" id="activities">
                         <option value="" hidden="hidden">Actividad Turística</option>
                         {activities.map((activity)=>(
                             <option key={activity.id} value={activity.nombre}>{activity.nombre}</option>
                         ))}
                     </select>
-                </div>
+         
             </div>
-            <button onClick={handleReset} type='button'>Resetear Filtros</button>
+            <div className={style.filtroHijo}>
+                <h3>Ordenar:</h3>
+                    <select value={filters.orderAbc} onChange={handleOrderABC} name="alfabetico" id="ordenABC">
+                        <option value="" hidden="hidden"> Alfabeticamente </option>
+                        <option value="Ascendente">Ascendente</option>
+                        <option value="Descendente">Descendente</option>
+                    </select>
+                    <select value={filters.orderNum} onChange={handleOrderPopu} name="poblacion" id="ordenPopulation">
+                        <option value="" hidden="hidden">Por Población</option>
+                        <option value="Ascendente">Ascendente</option>
+                        <option value="Descendente">Descendente</option>
+                    </select>
+            </div>
         </div>
-          { searchValue && <h2>Resultados de busqueda para: {searchValue}</h2>}
+
+        <button onClick={handleReset} type='button'>Resetear Filtros</button>
+          { didSearch && (countries !== respaldoC) && <h2>Resultados de busqueda para: {resultados}</h2>}
     </div>
      );
 

@@ -18,7 +18,7 @@ const getCountries = async (req, res) =>{
                await Countries.findOrCreate({
                 where: { id:pais.cca3, },
                 defaults: {
-                    name:pais.name.common,
+                    name:pais.translations.spa.common,
                     flags: flag,
                     continents:pais.continents,
                     capital:pais.capital,

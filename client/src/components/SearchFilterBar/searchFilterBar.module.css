@@ -1,8 +1,84 @@
-.filtros{
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.container > button{
+    background-color: rgb(216, 216, 216);
+    border: 1px solid white;
+    margin-bottom: 2em;
+}
+.container > button:hover{
+    color: white;
+    background-color:#0074D9 ;
+}
+
+.searchBar{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 0;
+    width: 90%;
 }
-.filtroHijo > {
+.searchBar input {
+    width: 60%;
+    padding: 0.5em;
+    margin: 0 1em;
+    border: 1px solid rgba(177, 177, 177, 0.835);
+    border-radius: 20px;
+}
+.searchBar button{
+    background-color: rgb(255, 153, 0);
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    color: white;
+}
+.searchBar button:hover{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    color: rgb(255, 153, 0);
+    border-color: rgb(255, 153, 0);
+    box-shadow: 0 0 0.5em rgb(255, 153, 0);
+}
 
+.filtros{
+    width: 100%;
+    padding: 1em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;/* 
+    background-color: #bce0ff; */
+}
+.filtroHijo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 45%;
+    margin: 0 auto 0.5em 2em;
+}
+.filtroHijo h3{
+    width: 25%
+}
+.filtroHijo select{
+    padding: 0.75em;
+    margin: 0 0.25em;
+    font-weight: bolder;
+    font-size: 1em;
+
+    color: white;
+    background-color: #000017;
+    border-radius: 5px;
+    border: 1px solid rgba(232, 232, 232, 0.835);
+}
+
+@media screen and (max-width:1000px) {
+    .filtros{
+        flex-direction: column;
+    }
+    .filtroHijo{
+        width: 90%;
+    }
 }
