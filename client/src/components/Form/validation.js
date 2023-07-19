@@ -12,9 +12,16 @@ export default function validation (input){
     if (dificultad>5 || dificultad<1){
         errors.dificultad= 'La dificultad debe ser un número entre 1 y 5';
     }
-    if (Number(input.duracion) < 0){
-        errors.duracion= 'La duracion no puede ser menor a 0';
+    if (input.duracion) {
+         if (Number(input.duracion) < 1){
+        errors.duracion= 'La duracion no puede ser menor a 1';
+        }
+        if (input.duracion==='') {
+             errors.duracion= '';
+        }
+       
     }
+   
     if (!/[0-9]$/.test(dificultad)) {
         errors.dificultad= 'La dificultad debe ser en números';
     }
@@ -30,6 +37,10 @@ export default function validation (input){
         errors.CountryId='Debe seleccionar al menos un país';
     }
     
-   
+    if (!errors.nombre && !errors.duracion && !errors.dificultad && !errors.temporada && !errors.CountryId){
+        errors.vacio = true;
+    }else{
+        errors.vacio = false;
+    }
     return errors;
 }
