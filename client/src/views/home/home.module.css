@@ -6,3 +6,15 @@
     margin: 0 5%;
     padding: 5em 5% 1em 5%;
 }
+.thisPage{
+    background-color: #0074D9;
+    color: white;
+}
+.btn {
+    border: 1px solid rgba(218, 218, 218, 0.623);
+    margin: 0.5em;
+}
+.btnNextPrev:hover, .btn:hover {
+    border: 1px solid rgba(0, 0, 0, 0.623);
+    box-shadow: 0 0 1em #adadad;
+}
