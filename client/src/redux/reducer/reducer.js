@@ -57,6 +57,12 @@ const initialState = {
             };
 
         case SEARCH:
+            if (payload === null) {
+                return {
+                    ...state,
+                    countries: [],
+                };
+            }
             return {
                 ...state, 
                 countries: payload,

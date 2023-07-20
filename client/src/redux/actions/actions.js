@@ -94,23 +94,11 @@ export const deleteAct = (id)=>{
     
 };
 
-export const search = (busqueda)=>{
-    let search = busqueda.trim();
-    const endpoint = `http://localhost:3001/countries/name?name=${search}`;
-
-    return async (dispatch) =>{
-        try {
-            const {data} = await axios(endpoint);
-            return dispatch ({
-                type: SEARCH,
-                payload: data,
-            })
-
-        } catch (error) {
-            alert('No hay país que coincida con la busqueda, intenta con un valor distinto.');
-            console.log(error.message);
-        }
-    }
+export const search = (datos)=>{
+   return {
+    type: SEARCH,
+    payload: datos
+   }
 };
 
 export const resetCountries = ()=>{

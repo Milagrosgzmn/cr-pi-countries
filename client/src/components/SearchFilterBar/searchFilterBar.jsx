@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {search,doesFilter , resetCountries, orderAbc, orderNum, filterByActivity, filterByContinent} from '../../redux/actions/actions';
+import {search,doesFilter , resetCountries, orderAbc, orderNum, filterByActivity, filterByContinent, setDisplayed} from '../../redux/actions/actions';
 import { useOnKeyPress } from '../../hooks/useOnKeyPress';
 
 import style from './searchFilterBar.module.css';
@@ -12,21 +13,36 @@ export default function SearchFilterBar (){
         return state;
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
     const [resultados, setResultado] = useState('');
     const [didSearch, setDidSearch] = useState(false);
     const [searchValue, setSearch] = useState('');
 
     function handleChange(e){
         setSearch(`${e.target.value}`);
+        setErrorMessage('');
      }
 
-   function searchHandler (){
-    
-      dispatch(search(searchValue));
-      setDidSearch(true);
-      setResultado(searchValue);
-      setSearch('');
-   }
+  async function searchHandler (){
+    let searchV = searchValue.trim();
+    const endpoint = `http://localhost:3001/countries/name?name=${searchV}`;
+
+        try {
+            const {data} = await axios(endpoint);
+            if (data) {
+                dispatch(search(data));
+                setDidSearch(true);
+                setResultado(searchValue);
+                setSearch('');
+            }
+
+        } catch (error) {
+           setErrorMessage ('No se encontraron paises que coincidad con la busqueda');
+           dispatch(search(null));
+        }
+    }
+      
+   
 
    useOnKeyPress(searchHandler, 'Enter');
 
@@ -52,7 +68,9 @@ export default function SearchFilterBar (){
         event.preventDefault();
         dispatch(resetCountries());
         setResultado('')
-        setDidSearch(false);     
+        setDidSearch(false); 
+        setSearch('')
+        setErrorMessage('');    
    }
 
      return (
@@ -99,7 +117,8 @@ export default function SearchFilterBar (){
         </div>
 
         <button onClick={handleReset} type='button'>Resetear Filtros</button>
-          { didSearch && (countries !== respaldoC) && <h2>Resultados de busqueda para: {resultados}</h2>}
+          {errorMessage && <h2>{errorMessage}</h2>}
+          { !errorMessage && didSearch && (countries !== respaldoC) && <h2>Resultados de busqueda para: {resultados}</h2>}
     </div>
      );
 
